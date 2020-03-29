@@ -13,7 +13,7 @@ namespace Orca2D
         [STAThread]
         private static void Main()
         {
-            using (var game = new PlatformerGame())
+            using (var game = new MyGame.MyGame())
             {
                 game.Run();
             }
