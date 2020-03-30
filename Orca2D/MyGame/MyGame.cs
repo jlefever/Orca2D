@@ -1,7 +1,11 @@
+using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Remoting.Lifetime;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Newtonsoft.Json;
+using Orca2D.MyGame.Entities;
 
 namespace Orca2D.MyGame
 {
@@ -13,15 +17,16 @@ namespace Orca2D.MyGame
         private readonly GraphicsDeviceManager _graphics;
         private readonly IInputProvider _inputProvider;
         private SpriteBatch _spriteBatch;
+        private SpritePack _spritePack;
         private Stage _stage;
-        private Player _player;
-        private Texture2D _playerTexture;
+        private PlayerEntity _player;
+        
 
         public MyGame()
         {
             _graphics = new GraphicsDeviceManager(this);
             _inputProvider = new KeyboardInputProvider();
-            _player = new Player();
+            _spritePack = new SpritePack();
             Content.RootDirectory = "Content";
         }
 
@@ -44,30 +49,22 @@ namespace Orca2D.MyGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            var texturePack = new TexturePack
+            // Load all sprites
+            var mapJson = File.ReadAllText("Content/External/sprite_maps.json");
+            var sheets = JsonConvert.DeserializeObject<SpriteSheetDto[]>(mapJson);
+            _spritePack = new SpritePackLoader(Content).Load(sheets);
+
+            // Create walking sprite
+            var animation = new AnimatedSprite(new []
             {
-                Exit = Content.Load<Texture2D>("Tiles/Exit"),
-                PlatformBlock = Content.Load<Texture2D>("Tiles/Platform"),
-                PassableBlock = Content.Load<Texture2D>("Tiles/BlockB0"),
-                ImpassableBlock = Content.Load<Texture2D>("Tiles/BlockA0"),
-                MonsterA = Content.Load<Texture2D>("Tiles/BlockA1"),
-                MonsterB = Content.Load<Texture2D>("Tiles/BlockA2"),
-                MonsterC = Content.Load<Texture2D>("Tiles/BlockA3"),
-                MonsterD = Content.Load<Texture2D>("Tiles/BlockA4"),
-                Gem = Content.Load<Texture2D>("Sprites/Gem")
-            };
+                _spritePack.King1,
+                _spritePack.King2,
+                _spritePack.King3,
+                _spritePack.King4
+            }, 300);
 
-            _playerTexture = Content.Load<Texture2D>("Sprites/Gem");
-
-            var parser = new StageFileParser();
-
-            using (var stream = TitleContainer.OpenStream("Content/Levels/1.txt"))
-            {
-                var reader = new StreamReader(stream);
-                var text = reader.ReadToEnd();
-                var tiles = parser.Parse(text);
-                _stage = new Stage(tiles, texturePack, new Vector2(40, 32));
-            }
+            // Create Player
+            _player = new PlayerEntity(_spritePack.King1, animation, Vector2.One, 0.5f);
         }
 
         /// <summary>
@@ -105,8 +102,7 @@ namespace Orca2D.MyGame
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
-            _stage.Draw(_spriteBatch);
-            _player.Draw(_spriteBatch, _playerTexture);
+            _player.Draw(_spriteBatch);
             _spriteBatch.End();
 
             base.Draw(gameTime);

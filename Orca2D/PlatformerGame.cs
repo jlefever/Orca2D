@@ -224,7 +224,7 @@ namespace Orca2D
 
             // Draw score
             var timeHeight = _hudFont.MeasureString(timeString).Y;
-            DrawShadowedString(_hudFont, "SCORE: " + _level.Score.ToString(), hudLocation + new Vector2(0.0f, timeHeight * 1.2f), Color.Yellow);
+            DrawShadowedString(_hudFont, "SCORE: " + _level.Score, hudLocation + new Vector2(0.0f, timeHeight * 1.2f), Color.Yellow);
 
             // Determine the status overlay message to show.
             Texture2D status = null;

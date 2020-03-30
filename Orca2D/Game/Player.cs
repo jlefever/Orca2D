@@ -209,7 +209,7 @@ namespace Orca2D.Game
             else
                 _velocity.X *= AirDragFactor;
 
-            // Prevent the player from running faster than his top speed.            
+            // Prevent the player from running faster than his top speed.
             _velocity.X = MathHelper.Clamp(_velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
 
             // Apply velocity.

@@ -3,7 +3,7 @@
     /// <summary>
     /// Controls the collision detection and response behavior of a tile.
     /// </summary>
-    public enum TileCollisionType
+    public enum CollisionType
     {
         /// <summary>
         /// A passable tile is one which does not hinder player motion at all.

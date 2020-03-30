@@ -1,0 +1,55 @@
+[
+    {
+        "TextureName": "Buch/characters",
+        "Sprites": {
+            "King1": {
+                "X": 8,
+                "Y": 41,
+                "Width": 17,
+                "Height": 23
+            },
+            "King2": {
+                "X": 40,
+                "Y": 41,
+                "Width": 17,
+                "Height": 23
+            },
+            "King3": {
+                "X": 72,
+                "Y": 41,
+                "Width": 17,
+                "Height": 23
+            },
+            "King4": {
+                "X": 104,
+                "Y": 41,
+                "Width": 17,
+                "Height": 23
+            },
+            "King5": {
+                "X": 135,
+                "Y": 41,
+                "Width": 17,
+                "Height": 23
+            },
+            "King6": {
+                "X": 168,
+                "Y": 41,
+                "Width": 17,
+                "Height": 23
+            },
+            "King7": {
+                "X": 200,
+                "Y": 41,
+                "Width": 17,
+                "Height": 23
+            },
+            "King8": {
+                "X": 233,
+                "Y": 41,
+                "Width": 17,
+                "Height": 23
+            }
+        }
+    }
+]
